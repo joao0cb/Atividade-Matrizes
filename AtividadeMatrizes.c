@@ -12,12 +12,13 @@ int quantidadeImpares(int matriz[][QTD_COLUNAS], int lin, int col);
 int encontrarValor(int matriz[][QTD_COLUNAS], int lin, int col, int *linEncontrada, int *colEncontrada);
 int somatorioMatriz(int matriz[][QTD_COLUNAS], int lin, int col);
 int mediaElementos(int matriz[][QTD_COLUNAS], int lin, int col);
+void mediaElementosLinhas(int matriz[][QTD_COLUNAS], int lin, int col);
 
 int main() {
     int qtdLinhas, qtdColunas, qtdImpares, valor, linhaEncontrada, colunaEncontrada, somatorio, media;
     int matriz[QTD_LINHAS][QTD_COLUNAS];
 
-    // srand(time(0));
+    srand(time(0));
 
     printf("Qual a quantidade de linhas? (1-%d): ", QTD_LINHAS);
     qtdLinhas = lerMatriz(1, QTD_LINHAS);
@@ -37,7 +38,7 @@ int main() {
         printf("Valor não encontrado. Tente novamente. Qual valor você deseja encontrar na matriz?\n");
         valor = encontrarValor(matriz, qtdLinhas, qtdColunas, &linhaEncontrada, &colunaEncontrada);
     }
-    printf("Valor encontrado na posição %d, %d\n\n", linhaEncontrada, colunaEncontrada);
+    printf("Valor encontrado na posição i = %d, j = %d\n\n", linhaEncontrada, colunaEncontrada);
 
     somatorio = somatorioMatriz(matriz, qtdLinhas, qtdColunas);
     printf("O somatório dos valores da matriz é: %d\n\n", somatorio);
@@ -45,6 +46,9 @@ int main() {
     media = somatorioMatriz(matriz, qtdLinhas, qtdColunas) / mediaElementos(matriz, qtdLinhas, qtdColunas);
     printf("A média de todos os elementos da matriz é: %d\n\n", media);
 
+    mediaElementosLinhas(matriz, qtdLinhas, qtdColunas);
+
+    return 0;
 }
 
 int lerMatriz(int min, int max) {
@@ -75,8 +79,6 @@ void imprimirMatriz(int matriz[][QTD_COLUNAS], int lin, int col) {
     printf("\n");
 }
 
-// Calcule a quantidade de números ímpares dentro da matriz (e imprima essa informação no main)
-
 int quantidadeImpares(int matriz[][QTD_COLUNAS], int lin, int col) {
     int qtdImpar = 0;
     for(int i = 0; i < lin; ++i) {
@@ -104,7 +106,7 @@ int encontrarValor(int matriz[][QTD_COLUNAS], int lin, int col, int *linEncontra
 }
 
 int somatorioMatriz(int matriz[][QTD_COLUNAS], int lin, int col) {
-    int soma = 0, *qtdPos = 0;
+    int soma = 0;
     for(int i = 0; i < lin; ++i) {
         for(int j = 0; j < col; ++j) {
             soma += matriz[i][j];
@@ -119,4 +121,17 @@ int mediaElementos(int matriz[][QTD_COLUNAS], int lin, int col) {
             ++soma;
         }
     } return soma;
+}
+
+void mediaElementosLinhas(int matriz[][QTD_COLUNAS], int lin, int col) {
+    int linha = 0, medialinha;
+    for(int i = 0; i < lin; ++i) {
+        linha = 0;
+        for(int j = 0; j < col; ++j) {
+            linha += matriz[i][j];
+            medialinha = linha / col;
+        }
+        printf("A média dos elementos da linha %d é: %d\n", i+1, medialinha);
+    }
+    printf("\n");
 }
